@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.3",
+    "koa": "^2.7.0",
+    "mongodb": "^3.2.4"
+  }
+}
