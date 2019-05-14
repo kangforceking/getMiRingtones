@@ -1,3 +1,4 @@
 const Ringtones = require('./ringtones')
 
-Ringtones.getList()
+const ringtones = new Ringtones()
+
