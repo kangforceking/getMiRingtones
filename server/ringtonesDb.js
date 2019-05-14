@@ -63,6 +63,9 @@ module.exports = class RingtonesDb{
             })
         })
     }
+    /**
+     * 连接数据库，创建集合
+     */
     async initDb(){
         await this.connect()
         await Promise.all([

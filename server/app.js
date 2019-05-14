@@ -1,4 +1,2 @@
 const Ringtones = require('./ringtones')
-
-const ringtones = new Ringtones()
-
+// const ringtones = new Ringtones()

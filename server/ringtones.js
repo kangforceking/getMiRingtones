@@ -6,12 +6,11 @@ const ringtonesDb = require('./ringtonesDb')
 module.exports = class Ringtones extends ringtonesDb{
     constructor(){
         super()
-        this.list = []
         this.pageCurrent = 1
         this.pageTotal = 0
         // 第页数据量
         this.pageNumber = 0 
-        this.init()
+        // this.init()
     }
     /** */
     getXiaomiHtml(){
@@ -39,7 +38,6 @@ module.exports = class Ringtones extends ringtonesDb{
             let address = $dom.find('.listen').attr('href')
             newList.push({title, address})
         })
-        this.list.push(newList)
         return newList
     }
     getPageTotal($){
@@ -65,6 +63,6 @@ module.exports = class Ringtones extends ringtonesDb{
                 let newList = this.pushList($)
                 this.addDatas('ringtones', newList)
             })
-        
     }
+    
 }
