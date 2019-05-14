@@ -1,19 +1,17 @@
 // 来自： http://www.cnblogs.com/xiandedanteng/p/9019254.html
 const http = require('http')
 const fs = require('fs')
+const path = require('path') 
+
 const randomStr = require('./utils/randomStr')
 
 module.exports = function(url){
     return new Promise((resolve, reject)=>{
         let urlArr = url.match(/http\:\/\/([a-z|A-Z|0-9|\.|-]+\.com)([a-z|A-Z|0-9|\.|-|\/]+\.mp3)/)
-        let hostname = urlArr[1]
-        let path = urlArr[2]
-        // 有端口加端口，没有端口默认80
-        let port = 80;
         req = http.request({
-            hostname,
-            port,
-            path,
+            hostname: urlArr[1],
+            port: 80,
+            path: urlArr[2],
             method: 'GET',
             headers: {
                 'Referer':'http://zhuti.xiaomi.com/ringtone',
@@ -26,12 +24,12 @@ module.exports = function(url){
             });
             resp.on('end',()=>{  
                 // 创建文件
-                let fileName = `./${randomStr()}.mp3`;
-                fs.writeFile(fileName, imgData, 'binary', function(err){
+                let mp3Name = `../download/${randomStr()}.mp3`;
+                fs.writeFile(path.join(__dirname, mp3Name), imgData, 'binary', function(err){
                     if(err){
                         reject(err)
                     } else {
-                        resolve(fileName.slice(1))
+                        resolve(mp3Name.slice(2))
                     }
                 });    
             });

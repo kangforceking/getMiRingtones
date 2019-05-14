@@ -81,8 +81,7 @@ module.exports = class Ringtones extends ringtonesDb{
                     this.getPageTotal($)
                 }
                 let newList = this.pushList($)
-                downloadMp3(newList[0].address)
-                // this.saveMp3(newList)
+                this.saveMp3(newList)
                 // this.addDatas('ringtones', newList)
             })
     }
