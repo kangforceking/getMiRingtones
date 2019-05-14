@@ -1,7 +1,8 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-
+//数据库相关操作
 const ringtonesDb = require('./ringtonesDb')
+const downloadMp3 = require('./downloadMp3')
 
 module.exports = class Ringtones extends ringtonesDb{
     constructor(){
@@ -10,7 +11,7 @@ module.exports = class Ringtones extends ringtonesDb{
         this.pageTotal = 0
         // 第页数据量
         this.pageNumber = 0 
-        // this.init()
+        this.init()
     }
     /** */
     getXiaomiHtml(){
@@ -27,7 +28,6 @@ module.exports = class Ringtones extends ringtonesDb{
         })
     }
     pushList($){
-
         let $list = $('.J_RingList li')
         let listLeg = $list.length
         this.pageNumber || (this.pageNumber = listLeg)
@@ -40,8 +40,12 @@ module.exports = class Ringtones extends ringtonesDb{
         })
         return newList
     }
+    /**
+     * 取总页面
+     * @param {Object} $ 
+     */
     getPageTotal($){
-        $('.mod .page a').each((index, dom)=>{
+        $('.mod .page a,.mod .page span').each((index, dom)=>{
             let thisText = $(dom).text()
             if (/^[1-9][0-9]*$/.test(thisText)) {
                 thisText *= 1
@@ -49,6 +53,22 @@ module.exports = class Ringtones extends ringtonesDb{
                     this.pageTotal = thisText
                 }
             }
+        })
+    }
+    /**
+     * 下载到本地并保存到数据库
+     * @param {Array} list 数据
+     */
+    saveMp3(list){
+        let lastIndex = list.length - 1
+        list.forEach(({title, address}, index)=>{
+            downloadMp3(address)
+                .then((fileAddress)=>{
+                    list[index].fileAddress = fileAddress
+                    if (index === lastIndex) {
+                        this.addDatas('ringtones', list)
+                    }
+                })
         })
     }
     //核心方法
@@ -61,7 +81,9 @@ module.exports = class Ringtones extends ringtonesDb{
                     this.getPageTotal($)
                 }
                 let newList = this.pushList($)
-                this.addDatas('ringtones', newList)
+                downloadMp3(newList[0].address)
+                // this.saveMp3(newList)
+                // this.addDatas('ringtones', newList)
             })
     }
     

@@ -1,8 +1,10 @@
+// 来自： http://www.cnblogs.com/xiandedanteng/p/9019254.html
 const http = require('http')
 const fs = require('fs')
+const randomStr = require('./utils/randomStr')
 
 module.exports = function(url){
-    return Promise((resolve, reject)=>{
+    return new Promise((resolve, reject)=>{
         let urlArr = url.match(/http\:\/\/([a-z|A-Z|0-9|\.|-]+\.com)([a-z|A-Z|0-9|\.|-|\/]+\.mp3)/)
         let hostname = urlArr[1]
         let path = urlArr[2]
@@ -24,12 +26,12 @@ module.exports = function(url){
             });
             resp.on('end',()=>{  
                 // 创建文件
-                let fileName = `./download/${name}`;
+                let fileName = `./${randomStr()}.mp3`;
                 fs.writeFile(fileName, imgData, 'binary', function(err){
                     if(err){
                         reject(err)
                     } else {
-                        resolve()
+                        resolve(fileName.slice(1))
                     }
                 });    
             });
