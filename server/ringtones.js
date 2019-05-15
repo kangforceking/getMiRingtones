@@ -7,11 +7,11 @@ const downloadMp3 = require('./downloadMp3')
 module.exports = class Ringtones extends ringtonesDb{
     constructor(){
         super()
-        this.pageCurrent = 1
+        this.pageCurrent = 3101
         this.pageTotal = 0
         // 第页数据量
         this.pageNumber = 0 
-        this.init()
+        this.startGetData()
     }
     /** */
     getXiaomiHtml(){
@@ -45,7 +45,7 @@ module.exports = class Ringtones extends ringtonesDb{
      * @param {Object} $ 
      */
     getPageTotal($){
-        $('.mod .page a,.mod .page span').each((index, dom)=>{
+        $('.page a').each((index, dom)=>{
             let thisText = $(dom).text()
             if (/^[1-9][0-9]*$/.test(thisText)) {
                 thisText *= 1
@@ -56,7 +56,7 @@ module.exports = class Ringtones extends ringtonesDb{
         })
     }
     /**
-     * 下载到本地并保存到数据库
+     * 批量下载到本地并保存到数据库
      * @param {Array} list 数据
      */
     saveMp3(list){
@@ -71,19 +71,27 @@ module.exports = class Ringtones extends ringtonesDb{
                 })
         })
     }
+    async startGetData(){
+        await this.init()
+        do {
+            let $ = await this.getXiaomiHtml()
+            let newList = this.pushList($)
+            this.pageCurrent++
+            console.log(this.pageCurrent, this.pageTotal)
+            console.table(newList);
+            this.addDatas('ringtones', newList)
+        } while (this.pageCurrent < this.pageTotal);
+    }
     //核心方法
     async init(){
+        let [$] = await Promise.all([this.getXiaomiHtml(), this.initDb()])
+        this.getPageTotal($)
+        let newList = this.pushList($)
+        // 存到数据库并下载到本地
+        // this.saveMp3(newList)
+        // 存到数据库
+        console.table(newList);
+        this.addDatas('ringtones', newList)
         // this.pageCurrent++
-        Promise
-            .all([this.getXiaomiHtml(), this.initDb()])
-            .then(([$])=>{
-                if (!this.pageTotal) {
-                    this.getPageTotal($)
-                }
-                let newList = this.pushList($)
-                this.saveMp3(newList)
-                // this.addDatas('ringtones', newList)
-            })
     }
-    
 }

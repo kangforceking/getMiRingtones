@@ -55,8 +55,9 @@ module.exports = class RingtonesDb{
         return new Promise((resolve, reject)=>{
             this.dbase.collection(collectionName).insertMany(data, (error)=>{
                 if (error) {
+                    console.log(error);
                     reject(error)
-                    this.db.close()
+                    // this.db.close()
                 } else {
                     resolve()
                 }
