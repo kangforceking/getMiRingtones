@@ -1,5 +1,16 @@
 {
   "dependencies": {
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "mocha": "^6.1.4",
+    "pre-commit": "^1.2.2"
+  },
+  "devDependencies": {
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.3",
     "koa": "^2.7.0",
