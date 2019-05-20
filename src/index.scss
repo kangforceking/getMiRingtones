@@ -1,0 +1,10 @@
+$red: #444;
+body {
+    background-color: $red;
+}
+.main {
+    width: 500px;
+    &-inner {
+        margin-top: 20px;
+    }
+}
