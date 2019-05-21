@@ -3,6 +3,7 @@ body {
     background-color: $red;
 }
 .main {
+    display: flex;
     width: 500px;
     &-inner {
         margin-top: 20px;
