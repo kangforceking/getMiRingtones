@@ -21,7 +21,7 @@ module.exports = {
                 }
             }, {
                 test: /\.js$/,
-                // include: path.resolve(__dirname, 'src'),
+                include: path.resolve(__dirname, 'src'),
                 use: {
                     loader: 'babel-loader'
                 }
@@ -29,15 +29,17 @@ module.exports = {
                 test: /\.scss$/,
                 include: path.resolve(__dirname, 'src'),
                 use: [
-                    /* {
+                    {
                         loader: 'style-loader'
-                    },  {
+                    }, {
                         loader: MiniCssExtractPlugin.loader
-                    }, */ {
+                    }, /* {
                         loader: 'vue-style-loader'
-                    },{
+                    }, */ {
                         loader: "css-loader"
                     }, {
+                        loader: 'postcss-loader'
+                    },{
                         loader: 'sass-loader',
                         options: {
                             outputStyle: 'compressed'
@@ -67,10 +69,10 @@ module.exports = {
         }
     },
     plugins: [
-        // new MiniCssExtractPlugin({
-        //     filename: '[name].[hash].css',
-        //     chunkFilename: '[id].[hash].css',
-        // }),
+        new MiniCssExtractPlugin({
+            filename: '[name].[hash].css',
+            chunkFilename: '[id].[hash].css',
+        }),
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
             title: '铃声'

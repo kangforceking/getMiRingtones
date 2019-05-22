@@ -1,5 +1,4 @@
-import { Vue } from 'vue';
-
+import Vue from 'vue'
 import './index.scss'
 
 document.title = '你好'

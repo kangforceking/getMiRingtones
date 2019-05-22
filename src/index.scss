@@ -1,10 +1,12 @@
 $red: #444;
 body {
     background-color: $red;
+    background : linear-gradient(to top, black, white);
 }
 .main {
     display: flex;
     width: 500px;
+    
     &-inner {
         margin-top: 20px;
     }
