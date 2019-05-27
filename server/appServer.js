@@ -2,15 +2,15 @@ const path = require('path')
 const Koa = require('koa')
 const StaticServer = require('koa-static')
 
-const Ringtones = require('./ringtones')
-const ringtones = new Ringtones()
+//数据库相关操作
+const ringtonesDb = require('./ringtonesDb')
 
 const app = new Koa()
 
-//静态
+//静态资源中间件
 app.use(
     StaticServer(
-        path.resolve(__dirname, '../dist')
+        path.resolve(__dirname, '../../../../eellyPPT001/')
     )
 )
 

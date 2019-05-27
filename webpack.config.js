@@ -2,6 +2,7 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
     entry: {
@@ -23,7 +24,8 @@ module.exports = {
                 test: /\.js$/,
                 include: path.resolve(__dirname, 'src'),
                 use: {
-                    loader: 'babel-loader'
+                    loader: 'babel-loader',
+                    // sourceMap: true
                 }
             }, {
                 test: /\.scss$/,
@@ -36,13 +38,15 @@ module.exports = {
                     }, /* {
                         loader: 'vue-style-loader'
                     }, */ {
-                        loader: "css-loader"
+                        loader: 'css-loader',
                     }, {
-                        loader: 'postcss-loader'
+                        loader: 'postcss-loader',
+                        
                     },{
                         loader: 'sass-loader',
                         options: {
-                            outputStyle: 'compressed'
+                            outputStyle: 'compressed',
+                            // sourceMap: true
                         }
                     }
                 ]
@@ -68,12 +72,18 @@ module.exports = {
             'vue$': 'vue/dist/vue.esm.js'
         }
     },
+    devtool: false,
     plugins: [
         new MiniCssExtractPlugin({
             filename: '[name].[hash].css',
             chunkFilename: '[id].[hash].css',
         }),
         new VueLoaderPlugin(),
+        new webpack.SourceMapDevToolPlugin({
+            test: /\.js$|\.scss$/,
+            include: path.resolve(__dirname, 'src'),
+            filename: '/[name].map'
+        }),
         new HtmlWebpackPlugin({
             title: '铃声',
             template: path.resolve(__dirname, 'src/index.html')
