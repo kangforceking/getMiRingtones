@@ -11,7 +11,7 @@ module.exports = class Ringtones extends ringtonesDb{
         this.pageTotal = 0
         // 第页数据量
         this.pageNumber = 0 
-        this.startGetData()
+        // this.startGetData()
     }
     /** */
     getXiaomiHtml(){
@@ -71,6 +71,9 @@ module.exports = class Ringtones extends ringtonesDb{
                 })
         })
     }
+    /**
+     * 开始爬数据并保存到库里
+     */
     async startGetData(){
         await this.init()
         do {

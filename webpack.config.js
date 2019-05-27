@@ -75,7 +75,8 @@ module.exports = {
         }),
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
-            title: '铃声'
+            title: '铃声',
+            template: path.resolve(__dirname, 'src/index.html')
         })
     ]
 }

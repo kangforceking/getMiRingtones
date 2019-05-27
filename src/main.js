@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import './index.scss'
+import App from './App.vue'
 
 document.title = '你好'
 
