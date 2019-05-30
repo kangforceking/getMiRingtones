@@ -65,6 +65,28 @@ module.exports = class RingtonesDb{
         })
     }
     /**
+     * 查询数据
+     * @param {String} collectionName 
+     */
+    findDatas({
+        collectionName,
+        limit = 10
+    }){
+        return new Promise((resolve, reject)=>{
+            try {
+                this.dbase.collection(collectionName).find().limit(limit).toArray((err, result)=>{
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(result)
+                    }   
+                })
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+    /**
      * 连接数据库，创建集合
      */
     async initDb(){
