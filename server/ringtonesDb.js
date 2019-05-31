@@ -70,17 +70,26 @@ module.exports = class RingtonesDb{
      */
     findDatas({
         collectionName,
-        limit = 10
+        limit = 10,
+        title = ''
     }){
         return new Promise((resolve, reject)=>{
             try {
-                this.dbase.collection(collectionName).find().limit(limit).toArray((err, result)=>{
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(result)
-                    }   
-                })
+                let whereObj = {}
+                title && (whereObj.title = title)
+                console.log(title, whereObj)
+                this
+                    .dbase
+                    .collection(collectionName)
+                    .find(whereObj)
+                    .limit(limit)
+                    .toArray((err, result)=>{
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve(result)
+                        }   
+                    })
             } catch (error) {
                 reject(error)
             }

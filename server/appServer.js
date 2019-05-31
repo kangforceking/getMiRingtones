@@ -1,4 +1,6 @@
 const path = require('path')
+const querystring = require('querystring')
+
 const Koa = require('koa')
 const StaticServer = require('koa-static')
 const Router = require('koa-router')
@@ -12,22 +14,36 @@ const router = new Router()
 
 router.get('/api/list', async (ctx, next) => {
     next()
+    let {
+        page = 1,
+        limit = 20,
+        title = ''
+    } = querystring.parse(ctx.querystring)
+    page *= 1 
+    limit *= 1
     try {
         await myDB.connect()
-        let list = await myDB.findDatas('ringtones')
+        let list = await myDB.findDatas({
+            collectionName: 'ringtones',
+            page,
+            limit,
+            title
+        })
         ctx.body = {
-            code: 200,
+            code: 200, 
             list
         }
     } catch (error) {
+        console.error(error);
+        
         ctx.body = {
             code: 1001
         }
     }
 })
-router.post('/api/list/ringtone', async (ctx, next)=>{
-
-})
+/* router.post('/api/list/ringtone', async (ctx, next)=>{
+    
+}) */
 
 app
     .use(router.routes())
