@@ -15,18 +15,18 @@ const router = new Router()
 router.get('/api/list', async (ctx, next) => {
     next()
     let {
-        page = 1,
-        limit = 20,
+        current = 1,
+        pageSize = 20,
         title = ''
     } = querystring.parse(ctx.querystring)
-    page *= 1 
-    limit *= 1
+    current *= 1 
+    pageSize *= 1
     try {
         await myDB.connect()
         let list = await myDB.findDatas({
             collectionName: 'ringtones',
-            page,
-            limit,
+            current,
+            pageSize,
             title
         })
         ctx.body = {

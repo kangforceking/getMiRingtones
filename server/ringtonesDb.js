@@ -70,7 +70,8 @@ module.exports = class RingtonesDb{
      */
     findDatas({
         collectionName,
-        limit = 10,
+        pageSize = 10,
+        current = 1,
         title = ''
     }){
         return new Promise((resolve, reject)=>{
@@ -82,7 +83,8 @@ module.exports = class RingtonesDb{
                     .dbase
                     .collection(collectionName)
                     .find(whereObj)
-                    .limit(limit)
+                    .limit(pageSize)
+                    .skip(pageSize * (current - 1))
                     .toArray((err, result)=>{
                         if (err) {
                             reject(err)
