@@ -19,7 +19,6 @@ module.exports = class RingtonesDb{
             MongoClient.connect(`${this.url}/${this.dbName}`, { useNewUrlParser: true }, (error, db)=>{
                 if (error) {
                     console.log(error);
-                    
                     reject(error)
                     db.close()
                 } else {
@@ -78,7 +77,6 @@ module.exports = class RingtonesDb{
             try {
                 let whereObj = {}
                 title && (whereObj.title = title)
-                console.log(title, whereObj)
                 this
                     .dbase
                     .collection(collectionName)

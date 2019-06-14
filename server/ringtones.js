@@ -7,7 +7,7 @@ const downloadMp3 = require('./downloadMp3')
 module.exports = class Ringtones extends ringtonesDb{
     constructor(){
         super()
-        this.pageCurrent = 3101
+        this.pageCurrent = 8538
         this.pageTotal = 0
         // 第页数据量
         this.pageNumber = 0 

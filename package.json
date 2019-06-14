@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "start": "node server/appServer",
     "build:dev": "webpack --mode development",
     "build:pro": "webpack --mode production"
   },
